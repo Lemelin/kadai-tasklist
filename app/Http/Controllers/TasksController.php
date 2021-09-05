@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+//Model追加
+use App\Task;
+
 class TasksController extends Controller
 {
     /**
@@ -13,7 +16,8 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
+        // index ビューに表示
+        return view('index', []);
     }
 
     /**
