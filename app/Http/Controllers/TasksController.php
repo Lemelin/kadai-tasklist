@@ -16,8 +16,9 @@ class TasksController extends Controller
      */
     public function index()
     {
-        // index ビューに表示
-        return view('index', []);
+        $allTasks = Task::all();
+
+        return view('index', ['viewTasks' => $allTasks,]);
     }
 
     /**
@@ -27,7 +28,9 @@ class TasksController extends Controller
      */
     public function create()
     {
-        //
+        $addTaskInstance = new Task;
+
+        return view('create', ['createTask' => $addTaskInstance,]);
     }
 
     /**
@@ -38,7 +41,12 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $taskInsertInstance = new Task;
+        $taskInsertInstance->content = $request->content;
+        $taskInsertInstance->save();
+
+        // トップページへリダイレクトさせる
+        return redirect('/');
     }
 
     /**
@@ -49,7 +57,9 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        //
+        $selectTask = Task::findOrFail($id);
+
+        return view('show', ['targetTask' => $selectTask,]);
     }
 
     /**
@@ -60,7 +70,9 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $editTaskInstance = Task::findOrFail($id);
+
+        return view('edit', ['editTargetTask' => $editTaskInstance,]);
     }
 
     /**
@@ -72,7 +84,11 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $taskUpdateInstance = Task::findOrFail($id);
+        $taskUpdateInstance->content = $request->content;
+        $taskUpdateInstance->save();
+
+        return redirect('/');
     }
 
     /**
@@ -83,6 +99,11 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $taskDeleteInstance = Task::findOrFail($id);
+
+        $taskDeleteInstance->delete();
+
+
+        return redirect('/');
     }
 }
