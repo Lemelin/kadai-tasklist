@@ -2,11 +2,11 @@
 
 @section('content')
 
-    <h1>id: {{ $editTargetTask->id }} のメッセージ編集ページ</h1>
+    <h1>id: {{ $editTargetTask->id }} のタスク編集ページ</h1>
 
     <div class="row">
         <div class="col-6">
-            {!! Form::model($editTargetTask, ['route' => ['update', $editTargetTask->id], 'method' => 'put']) !!}
+            {!! Form::model($editTargetTask, ['route' => ['tasks.update', $editTargetTask->id], 'method' => 'put']) !!}
 
                 <div class="form-group">
                     {!! Form::label('content', 'メッセージ:') !!}

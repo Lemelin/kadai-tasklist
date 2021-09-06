@@ -14,11 +14,11 @@
             <td>{{ $targetTask->content }}</td>
         </tr>
     </table>
-    {{--問題点--}}
-    {{--{!! link_to_route('edit', 'このタスクを編集', ['editTargetTask' => $targetTask->id], ['class' => 'btn btn-light']) !!}--}}
 
-    {{--{!! Form::model($targetTask, ['route' => ['destroy', $targetTask->id], 'method' => 'delete']) !!}--}}
-    {{--    {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}--}}
-    {{--{!! Form::close() !!}--}}
+    {!! link_to_route('tasks.edit', 'このタスクを編集', ['task' => $targetTask->id], ['class' => 'btn btn-light']) !!}
+
+    {!! Form::model($targetTask, ['route' => ['tasks.destroy', $targetTask->id], 'method' => 'delete']) !!}
+        {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
+    {!! Form::close() !!}
 
 @endsection

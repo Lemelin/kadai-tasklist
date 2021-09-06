@@ -14,14 +14,11 @@
             </thead>
             <tbody>
                 @foreach ($viewTasks as $eachTask)
+             
                 <tr>
-                    <td>{{ $eachTask->id }}</td>
+                    <td>{!! link_to_route('tasks.show', $eachTask->id, ['task' => $eachTask->id]) !!}</td>
                     <td>{{ $eachTask->content }}</td>
                 </tr>
-                {{--<tr>--}}
-                {{--    <td>{!! link_to_route('show', $eachTask->id, ['targetTask' => $eachTask->id]) !!}</td>--}}
-                {{--    <td>{{ $eachTask->content }}</td>--}}
-                {{--</tr>--}}
                 
                 @endforeach
                 
