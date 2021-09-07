@@ -10,8 +10,12 @@
             <td>{{ $targetTask->id }}</td>
         </tr>
         <tr>
-            <th>メッセージ</th>
+            <th>タスク</th>
             <td>{{ $targetTask->content }}</td>
+        </tr>
+        <tr>
+            <th>状態</th>
+            <td>{{ $targetTask->status }}</td>
         </tr>
     </table>
 
