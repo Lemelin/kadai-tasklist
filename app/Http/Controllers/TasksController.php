@@ -9,16 +9,21 @@ use App\Task;
 
 class TasksController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $allTasks = Task::orderBy('id','desc')->paginate(20);
+    {   
+        if (\Auth::check()) {
 
+        $user = \Auth::user();
+        $allTasks = $user->modelTasks()->orderBy('created_at', 'desc')->paginate(10);
         return view('index', ['viewTasks' => $allTasks,]);
+        }
+        return view('welcome');
     }
 
     /**
@@ -27,10 +32,14 @@ class TasksController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        $addTaskInstance = new Task;
+    {   
+        if (\Auth::check()) {
 
+        $addTaskInstance = new Task;
+        
         return view('create', ['createTask' => $addTaskInstance,]);
+        }
+        return view('welcome');
     }
 
     /**
@@ -46,13 +55,18 @@ class TasksController extends Controller
             'status' =>'required|max:10',
         ]);
         
+        /*
         $taskInsertInstance = new Task;
         $taskInsertInstance->status = $request->status;
         $taskInsertInstance->content = $request->content;
         $taskInsertInstance->save();
-
-        // トップページへリダイレクトさせる
-        return redirect('/');
+        */
+        $request->user()->modelTasks()->create([
+            'status' => $request->status,
+            'content' => $request->content,
+        ]);
+        
+        return back();
     }
 
     /**
@@ -63,9 +77,12 @@ class TasksController extends Controller
      */
     public function show($id)
     {
+        if (\Auth::check()) {
         $selectTask = Task::findOrFail($id);
 
         return view('show', ['targetTask' => $selectTask,]);
+        }
+        return view('welcome');
     }
 
     /**
@@ -76,9 +93,12 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
+        if (\Auth::check()) {
         $editTaskInstance = Task::findOrFail($id);
 
         return view('edit', ['editTargetTask' => $editTaskInstance,]);
+        }
+        return view('welcome');
     }
 
     /**
@@ -115,7 +135,7 @@ class TasksController extends Controller
 
         $taskDeleteInstance->delete();
 
-
         return redirect('/');
     }
+  
 }
