@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 @section('content')
-
+    
     <h1>id = {{ $targetTask->id }} のタスク詳細ページ</h1>
 
     <table class="table table-bordered">

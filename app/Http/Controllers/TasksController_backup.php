@@ -18,12 +18,12 @@ class TasksController extends Controller
     public function index()
     {   
         if (\Auth::check()) {
+
         $user = \Auth::user();
         $allTasks = $user->modelTasks()->orderBy('created_at', 'desc')->paginate(10);
         return view('index', ['viewTasks' => $allTasks,]);
         }
         return view('welcome');
-        
     }
 
     /**
@@ -33,11 +33,13 @@ class TasksController extends Controller
      */
     public function create()
     {   
+        if (\Auth::check()) {
+
         $addTaskInstance = new Task;
         
         return view('create', ['createTask' => $addTaskInstance,]);
-
-
+        }
+        return view('welcome');
     }
 
     /**
@@ -75,15 +77,14 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        
+        if (\Auth::check()) {
+        $user = \Auth::user();
         $selectTask = Task::findOrFail($id);
+
+        return view('show', ['targetTask' => $selectTask,]);
         
-        if(\Auth::id() === $selectTask->user_id) {
-           return view('show', ['targetTask' => $selectTask,]);
         }
-
         return view('welcome');
-
     }
 
     /**
@@ -94,16 +95,12 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
+        if (\Auth::check()) {
         $editTaskInstance = Task::findOrFail($id);
-        
-        if(\Auth::id() === $editTaskInstance->user_id) {
 
         return view('edit', ['editTargetTask' => $editTaskInstance,]);
         }
-
         return view('welcome');
-
-
     }
 
     /**
